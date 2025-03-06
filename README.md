@@ -52,56 +52,56 @@ before it starts training.
 To train on the CIFAR-10 dataset based on the classification approach, you need to run the following code on terminal:  
 
 ```
-python train_cifar10_classification.py
+python train_angle_classification.py
 ```
 
-Please look into the `train_cifar10_classification.py` for more details.
+Please look into the `train_angle_classification.py` for more details.
 
 To train on the CIFAR-10 dataset based on the regression approach, you need to run the following code on terminal:  
 
 ```
-python train_cifar10_regression.py
+python train_angle_regression.py
 ```
 
-Please look into the `train_cifar10_regression.py` for more details.
+Please look into the `train_angle_regression.py` for more details.
 
 ## Inference
 To conduct inference on the CIFAR-10 validation dataset using classification approach, you need 
 to run the following code on terminal:
 
 ```
-python  inference_classifier.py --model_name ./pretrained/rotation_angle_classifier_custom_46_epoch.pth --test_index 60
+python  inference_angle_classification.py --model_name ./pretrained/rotation_angle_classifier_custom_46_epoch.pth --test_index 60
 ```
 
 Here test_index of 60 is used. You can use any number between 0 and 9999 since the CIFAR-10 validation set has 10000 images. 
-Please look into the `inference_classifier.py` for more details. 
+Please look into the `inference_angle_classification.py` for more details. 
 
 You can also conduct inference by providing two images as input: image 1 (original image) and image 2 (rotated image) 
 as follows using terminal:
 
 ```
-python  inference_classifier.py --model_name ./pretrained/rotation_angle_classifier_custom_46_epoch.pth --image1 ./test_sample_images/original_image.png --image2 ./test_sample_images/rotated_image.png
+python  inference_angle_classification.py --model_name ./pretrained/rotation_angle_classifier_custom_46_epoch.pth --image1 ./test_sample_images/original_image.png --image2 ./test_sample_images/rotated_image.png
 ```
 
-Please look into the `inference_classifier.py` for more details. Note the model name (checkpoint name) to be used 
+Please look into the `inference_angle_classification.py` for more details. Note the model name (checkpoint name) to be used 
 `rotation_angle_classifier_custom_46_epoch.pth` which can be different based on the network type used. 
 
 Similarly, to conduct inference on the CIFAR-10 validation dataset using regression approach, you need 
 to run the following code on terminal:
 
 ```
-python  inference_regressor.py --model_name ./pretrained/rotation_angle_regressor_custom_50_epoch.pth --test_index 60
+python  inference_angle_regression.py --model_name ./pretrained/rotation_angle_regressor_custom_50_epoch.pth --test_index 60
 ```
 
 Here test_index of 60 is used. You can use any number between 0 and 9999 since the CIFAR-10 validation set has 10000 images. 
-Please look into the `inference_regressor.py` for more details. 
+Please look into the `inference_angle_regression.py` for more details. 
 
 You can also conduct inference by providing two images as input: image 1 (original image) and image 2 (rotated image) 
 as follows using terminal:
 
 ```
-python  inference_regressor.py --model_name ./pretrained/rotation_angle_regressor_custom_50_epoch.pth --image1 ./test_sample_images/original_image.png --image2 ./test_sample_images/rotated_image.png
+python  inference_angle_regression.py --model_name ./pretrained/rotation_angle_regressor_custom_50_epoch.pth --image1 ./test_sample_images/original_image.png --image2 ./test_sample_images/rotated_image.png
 ```
 
-Please look into the `inference_regressor.py` for more details. Note the model name (checkpoint name) to be used 
+Please look into the `inference_angle_regression.py` for more details. Note the model name (checkpoint name) to be used 
 `rotation_angle_regressor_custom_50_epoch.pth` which can be different based on the network type used. 
