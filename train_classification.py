@@ -57,8 +57,6 @@ def main():
     parser.add_argument('--input_size', type=int, default=32,  # 32, 224
                         help='Number of input size for training and validation dataset: 32 for custom network or 224 '
                              'for others such as ResNet and vision transformer.')
-    parser.add_argument('--channel_concat', default=False, action="store_true",
-                        help='Input images concatenation: True (channel dimension) or False (vertical dimension).')
     parser.add_argument('--network_type', type=str, default='custom',
                         help='Network type to use: custom, resnet or transformer.')
     parser.add_argument('--num_samples_per_image', type=int, default=10,
@@ -124,21 +122,15 @@ def main():
     # Initialize the model
     logger.info("\tInitializing model...")
     if args.network_type == 'custom':
-        model = RotationAnglePredictorCustomNet(num_classes=360,
-                                                channel_concat=args.channel_concat).to(device)  # Classification
+        model = RotationAnglePredictorCustomNet(num_classes=360).to(device)  # Classification
     elif args.network_type == 'resnet':  # Requires more computation resource to train
-        model = RotationAnglePredictorResNet(num_classes=360,
-                                             channel_concat=args.channel_concat).to(device)  # Classification
+        model = RotationAnglePredictorResNet(num_classes=360).to(device)  # Classification
     elif args.network_type == 'transformer':  # Requires more computation resource to train
-        model = RotationAnglePredictorTransformer(num_classes=360,
-                                                  channel_concat=args.channel_concat).to(device)  # Classification
+        model = RotationAnglePredictorTransformer(num_classes=360).to(device)  # Classification
     else:
         raise ValueError("Error: Unsupported network type:" + args.network_type)
 
-    if args.channel_concat:
-        logger.info("Model Summary: {}".format(get_model_info(model, (args.input_size, args.input_size), device)))
-    else:
-        logger.info("Model Summary: {}".format(get_model_info(model, (args.input_size * 2, args.input_size), device)))
+    logger.info("Model Summary: {}".format(get_model_info(model, (args.input_size, args.input_size), device)))
     logger.info("\tModel is initialized.")
 
     # Define loss function and optimizer

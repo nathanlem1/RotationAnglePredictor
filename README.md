@@ -24,7 +24,7 @@ regression-based approach.
 
 A qualitative sample result of our proposed method is shown below.
 
-![](./sample_result_51_degree.png)
+![](./assets/sample_result_51_degree.png)
 
 
 
@@ -69,7 +69,7 @@ To conduct inference on the CIFAR-10 validation dataset using classification app
 to run the following code on terminal:
 
 ```
-python  inference_classifier.py --model_name rotation_angle_classifier_custom_46_epoch.pth --test_index 60
+python  inference_classifier.py --model_name ./pretrained/rotation_angle_classifier_custom_46_epoch.pth --test_index 60
 ```
 
 Here test_index of 60 is used. You can use any number between 0 and 9999 since the CIFAR-10 validation set has 10000 images. 
@@ -79,7 +79,7 @@ You can also conduct inference by providing two images as input: image 1 (origin
 as follows using terminal:
 
 ```
-python  inference_classifier.py --model_name rotation_angle_classifier_custom_46_epoch.pth --image1 original_image.png --image2 rotated_image.png
+python  inference_classifier.py --model_name ./pretrained/rotation_angle_classifier_custom_46_epoch.pth --image1 ./test_sample_images/original_image.png --image2 ./test_sample_images/rotated_image.png
 ```
 
 Please look into the `inference_classifier.py` for more details. Note the model name (checkpoint name) to be used 
@@ -89,7 +89,7 @@ Similarly, to conduct inference on the CIFAR-10 validation dataset using regress
 to run the following code on terminal:
 
 ```
-python  inference_regressor.py --model_name rotation_angle_regressor_custom.pth --test_index 60
+python  inference_regressor.py --model_name ./pretrained/rotation_angle_regressor_custom_50_epoch.pth --test_index 60
 ```
 
 Here test_index of 60 is used. You can use any number between 0 and 9999 since the CIFAR-10 validation set has 10000 images. 
@@ -99,8 +99,8 @@ You can also conduct inference by providing two images as input: image 1 (origin
 as follows using terminal:
 
 ```
-python  inference_regressor.py --model_name rotation_angle_regressor_custom.pth --image1 original_image.png --image2 rotated_image.png
+python  inference_regressor.py --model_name ./pretrained/rotation_angle_regressor_custom_50_epoch.pth --image1 ./test_sample_images/original_image.png --image2 ./test_sample_images/rotated_image.png
 ```
 
 Please look into the `inference_regressor.py` for more details. Note the model name (checkpoint name) to be used 
-`rotation_angle_regressor_custom.pth` which can be different based on the network type used. 
+`rotation_angle_regressor_custom_50_epoch.pth` which can be different based on the network type used. 

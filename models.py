@@ -1,7 +1,6 @@
 """
-We design the rotation angle prediction model using two approaches when providing the original and rotated input images:
-1. Concatenating the input images along the channel dimension, e.g. Two 3x32x32 images lead to 6x32x32.
-2. Concatenating the input images along the vertical dimension, e.g. Two 3x32x32 images lead to 3x64x32.
+We design the rotation angle prediction model using different deep learning architectures. We concatenate the input
+images along the channel dimension, e.g. two 3x32x32 images lead to 6x32x32.
 """
 
 from copy import deepcopy
@@ -34,7 +33,7 @@ def get_model_info(model, tsize, device):
 
 
 class RotationAnglePredictorCustomNet(nn.Module):
-    def __init__(self, num_classes, channel_concat=True):
+    def __init__(self, num_classes):
         """
         Define a custom neural network model for rotation angle prediction.
 
@@ -44,11 +43,7 @@ class RotationAnglePredictorCustomNet(nn.Module):
          """
         super(RotationAnglePredictorCustomNet, self).__init__()
         # Input has 6 channels (3 for each image)
-        self.channel_concat = channel_concat
-        if self.channel_concat:
-            self.conv1 = nn.Conv2d(6, 32, kernel_size=(3, 3), stride=(1, 1), padding=1)
-        else:
-            self.conv1 = nn.Conv2d(3, 32, kernel_size=(3, 3), stride=(1, 1), padding=1)
+        self.conv1 = nn.Conv2d(6, 32, kernel_size=(3, 3), stride=(1, 1), padding=1)
         self.bn1 = nn.BatchNorm2d(32)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=1)
         self.bn2 = nn.BatchNorm2d(64)
@@ -63,10 +58,7 @@ class RotationAnglePredictorCustomNet(nn.Module):
         self.fc2 = nn.Linear(512, num_classes)  # Output: 360 classes for classification or single value for regression
 
     def forward(self, x1, x2):
-        if self.channel_concat:
-            x = torch.cat((x1, x2), dim=1)  # Concatenate the two images along the channel dimension
-        else:
-            x = torch.cat((x1, x2), dim=2)  # Concatenate the two images along the vertical dimension
+        x = torch.cat((x1, x2), dim=1)  # Concatenate the two images along the channel dimension
 
         x = self.bn1(self.relu(self.conv1(x)))
         x = self.maxpool(x)

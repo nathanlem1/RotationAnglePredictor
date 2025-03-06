@@ -22,7 +22,7 @@ def main():
                              'others such as ResNet and vision transformers.')
     parser.add_argument('--network_type', type=str, default='custom',
                         help='Network type to use: custom, resnet or transformer.')
-    parser.add_argument('--model_name', type=str, default='rotation_angle_classifier_custom_46_epoch.pth',
+    parser.add_argument('--model_name', type=str, default='./pretrained/rotation_angle_classifier_custom_46_epoch.pth',
                         help='The name of the trained model (ckpt) for inference or evaluation.')
     parser.add_argument('--test_index', type=int, default=60,
                         help='Index of the test image: 0 to 9999 (CIFAR10 test data has 10000 images).')
