@@ -30,10 +30,11 @@ A qualitative sample result of our proposed method is shown below.
 
 ## Installation
 
-Go to the folder of this code and install dependencies to have the same environment configuration as the one we used. 
+Git clone this repo and install dependencies to have the same environment configuration as the one we used. 
 Note that we trained all models on a single NVIDIA GeForce RTX 2080 Ti GPU, on Windows OS.
 
 ```
+git clone https://github.com/nathanlem1/RotationAnglePredictor.git
 cd RotationAnglePrediction
 pip install -r requirements.txt
 ```
