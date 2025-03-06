@@ -33,12 +33,12 @@ def get_model_info(model, tsize, device):
 
 
 class RotationAnglePredictorCustomNet(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, out_features):
         """
         Define a custom neural network model for rotation angle prediction.
 
         Parameters:
-            num_classes (int): 1 for regression (single value) or 360 for classification into 360 classes (one for each
+            out_features (int): 1 for regression (single value) or 360 for classification into 360 classes (one for each
         degree).
          """
         super(RotationAnglePredictorCustomNet, self).__init__()
@@ -55,7 +55,7 @@ class RotationAnglePredictorCustomNet(nn.Module):
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.dropout = nn.Dropout(0.25)  # Add dropout for regularization
         self.fc1 = nn.Linear(256 * 2 * 2, 512)  # Assuming input size is 32x32
-        self.fc2 = nn.Linear(512, num_classes)  # Output: 360 classes for classification or single value for regression
+        self.fc2 = nn.Linear(512, out_features)  # Output: 360 classes for classification or single value for regression
 
     def forward(self, x1, x2):
         x = torch.cat((x1, x2), dim=1)  # Concatenate the two images along the channel dimension
@@ -81,12 +81,12 @@ class RotationAnglePredictorCustomNet(nn.Module):
 
 
 class RotationAnglePredictorResNet(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, out_features):
         """
         Adapt ResNet model for rotation angle prediction.
 
         Parameters:
-            num_classes (int): 1 for regression (single value) or 360 for classification into 360 classes (one for each
+            out_features (int): 1 for regression (single value) or 360 for classification into 360 classes (one for each
         degree).
         """
         super(RotationAnglePredictorResNet, self).__init__()
@@ -125,7 +125,7 @@ class RotationAnglePredictorResNet(nn.Module):
             nn.Linear(num_features, 512),  # Add an intermediate layer
             nn.ReLU(),
             nn.Dropout(0.5),  # Add dropout for regularization
-            nn.Linear(512, num_classes)  # Output: 360 classes for classification or single value for regression.
+            nn.Linear(512, out_features)  # Output: 360 classes for classification or single value for regression.
         )
 
     def forward(self, image1, image2):
@@ -139,12 +139,12 @@ class RotationAnglePredictorResNet(nn.Module):
 
 
 class RotationAnglePredictorTransformer(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, out_features):
         """
         Adapt vision transformer model for rotation angle prediction.
 
         Parameters:
-            num_classes (int): 1 for regression (single value) or 360 for classification into 360 classes (one for each
+            out_features (int): 1 for regression (single value) or 360 for classification into 360 classes (one for each
         degree).
         """
         super(RotationAnglePredictorTransformer, self).__init__()
@@ -184,7 +184,7 @@ class RotationAnglePredictorTransformer(nn.Module):
             nn.Linear(num_features, 512),  # Intermediate layer
             nn.ReLU(),
             nn.Dropout(0.5),  # Dropout for regularization
-            nn.Linear(512, num_classes)  # Output: 360 classes for classification or single value for regression.
+            nn.Linear(512, out_features)  # Output: 360 classes for classification or single value for regression.
         )
 
     def forward(self, image1, image2):

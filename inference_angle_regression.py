@@ -45,11 +45,11 @@ def main():
     # Initialize the model
     logger.info("\tInitializing model...")
     if args.network_type == 'custom':
-        model = RotationAnglePredictorCustomNet(num_classes=1).to(device)  # Regression
+        model = RotationAnglePredictorCustomNet(out_features=1).to(device)  # Regression
     elif args.network_type == 'resnet':
-        model = RotationAnglePredictorResNet(num_classes=1).to(device)  # Regression
+        model = RotationAnglePredictorResNet(out_features=1).to(device)  # Regression
     elif args.network_type == 'transformer':
-        model = RotationAnglePredictorTransformer(num_classes=1).to(device)  # Regression
+        model = RotationAnglePredictorTransformer(out_features=1).to(device)  # Regression
     else:
         raise ValueError("Error: Unsupported network type:" + args.network_type)
 
