@@ -52,7 +52,7 @@ before it starts training.
 To train on the CIFAR-10 dataset based on the classification approach, you need to run the following code on terminal:  
 
 ```
-python train_angle_classification.py
+python train_angle_classification.py --num_samples_per_image 10
 ```
 
 Please look into the `train_angle_classification.py` for more details.
@@ -60,7 +60,7 @@ Please look into the `train_angle_classification.py` for more details.
 To train on the CIFAR-10 dataset based on the regression approach, you need to run the following code on terminal:  
 
 ```
-python train_angle_regression.py
+python train_angle_regression.py  --num_samples_per_image 10
 ```
 
 Please look into the `train_angle_regression.py` for more details.
