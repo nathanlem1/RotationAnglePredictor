@@ -11,9 +11,9 @@ from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
 import matplotlib.pyplot as plt
 
-from models import RotationAnglePredictorCustomNet, RotationAnglePredictorResNet, RotationAnglePredictorTransformer, \
-    get_model_info
-from utils import RotationDataset, generate_synthetic_pairs_regression
+from model.models import RotationAnglePredictorCustomNet, RotationAnglePredictorResNet, \
+    RotationAnglePredictorTransformer, get_model_info
+from utils.utils import RotationDataset, generate_synthetic_pairs_regression
 
 
 def set_random_seed(seed):

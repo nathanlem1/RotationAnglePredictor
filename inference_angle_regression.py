@@ -6,9 +6,9 @@ import torch
 from torchvision import transforms, datasets
 import matplotlib.pyplot as plt
 
-from models import RotationAnglePredictorCustomNet, RotationAnglePredictorResNet, RotationAnglePredictorTransformer, \
-    get_model_info
-from utils import generate_synthetic_pairs_regression
+from model.models import RotationAnglePredictorCustomNet, RotationAnglePredictorResNet, \
+    RotationAnglePredictorTransformer, get_model_info
+from utils.utils import generate_synthetic_pairs_regression
 
 
 def main():
