@@ -2,6 +2,7 @@ import argparse
 import copy
 from loguru import logger
 import numpy as np
+import os
 import random
 import torch
 import torch.nn as nn
@@ -16,28 +17,37 @@ from model.models import RotationAnglePredictorCustomNet, RotationAnglePredictor
 from utils.utils import RotationDataset, discretize_angle, generate_synthetic_pairs_classification
 
 
-def set_random_seed(seed):
+def set_seed(seed: int = 42):
     """
     Set the random seed for reproducibility across Python, NumPy, and PyTorch.
 
     Parameters:
-        seed (int): The seed value to use.
+        seed (int): The seed value to use. You can set the seed to any fixed value.
+    Read more on:
+        https://docs.pytorch.org/docs/stable/notes/randomness.html
+        https://medium.com/@heyamit10/pytorch-reproducibility-a-practical-guide-d6f573cba679
     """
     # Set the seed for Python's built-in random module
     random.seed(seed)
-
     # Set the seed for NumPy
     np.random.seed(seed)
-
     # Set the seed for PyTorch
     torch.manual_seed(seed)
-
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-
     # Ensure deterministic behavior in cuDNN (may impact performance)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True  # Disable CuDNN's non-deterministic optimizations.
+    torch.backends.cudnn.benchmark = False  # If True, it causes cuDNN to benchmark multiple convolution algorithms and
+    # select the fastest. For PyTorch reproducibility, you need to set to False at cost of slightly lower run-time
+    # performance but easy for experimentation.
+
+    # Avoiding nondeterministic algorithms
+    torch.use_deterministic_algorithms(True)
+
+    # Set seed to for os.environ, which is a mapping object that represents the user’s OS environmental variables.
+    os.environ['PYTHONHASHSEED'] = str(seed) # pythonhashseed is randomly generated when you create a variable in Python
+
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 
 
 def main():
@@ -70,7 +80,13 @@ def main():
     logger.info("Args: {}".format(args))
 
     # For reproducibility
-    set_random_seed(42)
+    if args.is_repr:
+        seed = 42  # You can set the seed to any fixed value.
+        set_seed(seed)
+    else:
+        torch.backends.cudnn.benchmark = True  # If True, causes cuDNN to benchmark multiple convolution algorithms and
+        # select the fastest. For PyTorch reproducibility, you need to set to False at cost of slightly lower run-time
+        # performance but easy for experimentation.
 
     # Data preprocessing
     train_transform = transforms.Compose([
